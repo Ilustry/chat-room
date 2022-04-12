@@ -1,13 +1,16 @@
 <div class="card mx-4 my-4">
     <div class="card-header">
         <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item mr-2" *ngIf = "!conectado">
+                <input type="text" class="form-control" [(ngModel)] = "message.username" placeholder="Digite seu nome"
+                    name="username">
+            </li>
             <li class="nav-item mr-2">
-                <button class="btn btn-success" type="button" (click) = "conectar()"
-                *ngIf = "!conectado">Conectar</button>
+                <button class="btn btn-success" type="button" (click)="conectar()" *ngIf = "!conectado">Conectar</button>
             </li>
             <li class="nav-item">
-                <button class="btn btn-warning" type="button" (click) = "desconectar()"
-                *ngIf = "conectado">Desconectar</button>
+                <button class="btn btn-warning" type="button" (click)="desconectar()"
+                    *ngIf="conectado">Desconectar</button>
             </li>
         </ul>
     </div>
@@ -15,15 +18,21 @@
     <div class="card-body" style="overflow: scroll; height: 360px;" *ngIf = "conectado">
         <ul class="list-group">
             <li class="list-group-item list-group-item-light" *ngFor = "let message of messages">
-                {{message}}
+                <span *ngIf = "message.type == 'NOVO_USUARIO'">
+                    {{message.date | date: 'shortTime'}} {{message.text}} {{message.username}}
+                </span>
+                <span *ngIf = "message.type == 'MENSAGEM'">
+                    {{message.date | date: 'shortTime'}} - {{message.username}} disse: <br> {{message.text}}
+                </span>
             </li>
         </ul>
     </div>
 
-    <div class="card-footer" *ngIf = "conectado">
+    <div class="card-footer" *ngIf="conectado">
         <form class="form-inline">
             <div class="form-group mx-3">
-                <input type="text" class="form-control" [(ngModel)] = "message.text" placeholde="Digite uma mensagem" name="texto">
+                <input type="text" class="form-control" [(ngModel)] = "message.text" placeholder="Digite uma mensagem"
+                    name="texto">
             </div>
             <button class="btn btn-primary" type="submit" (click) = "sendMessage()">Enviar</button>
         </form>

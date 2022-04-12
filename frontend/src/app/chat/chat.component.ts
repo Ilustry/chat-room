@@ -28,9 +28,18 @@ export class ChatComponent implements OnInit {
 
       this.client.subscribe('/chat/message', e => {
         let message: Message = JSON.parse(e.body) as Message;
+        message.date = new Date(message.date);
         this.messages.push(message);
         console.log(message);
       });
+
+      this.message.type = "NOVO_USUARIO";
+
+      this.client.publish({
+        destination: '/app/message',
+        body: JSON.stringify(this.message)
+      })
+
     };
 
     this.client.onDisconnect = (frame) => {
@@ -51,6 +60,7 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(): void {
+    this.message.type = "MENSAGEM";
     this.client.publish({
       destination: '/app/message',
       body: JSON.stringify(this.message)
