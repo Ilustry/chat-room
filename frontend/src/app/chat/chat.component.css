@@ -1,0 +1,25 @@
+.custom-file{
+    width: auto;
+    margin-left: auto;
+}
+
+.custom-file-label{
+    overflow-y: hidden;
+}
+
+.form-inline label {
+    justify-content: left;
+}
+
+.mat-toolbar{
+    height: auto;
+}
+
+.mat-toolbar.mat-primary {
+    background: #007bff;
+    color: #fff;
+}
+
+.title{
+    font-size: x-large;
+}

@@ -1,3 +1,7 @@
+<mat-toolbar color="primary">
+    <span class="title">Chat-Room</span>
+</mat-toolbar>
+
 <div class="card mx-4 my-4">
     <div class="card-header">
         <ul class="nav nav-pills card-header-pills">
@@ -6,11 +10,11 @@
                     name="username">
             </li>
             <li class="nav-item mr-2">
-                <button class="btn btn-success" type="button" (click)="conectar()" *ngIf = "!conectado">Conectar</button>
+                <button class="btn btn-success" type="button" (click) = "conectar()" *ngIf = "!conectado" [disabled]="!message.username">Conectar</button>
             </li>
             <li class="nav-item">
-                <button class="btn btn-warning" type="button" (click)="desconectar()"
-                    *ngIf="conectado">Desconectar</button>
+                <button class="btn btn-warning" type="button" (click) = "desconectar()"
+                    *ngIf = "conectado">Desconectar</button>
             </li>
         </ul>
     </div>
@@ -19,22 +23,33 @@
         <ul class="list-group">
             <li class="list-group-item list-group-item-light" *ngFor = "let message of messages">
                 <span *ngIf = "message.type == 'NOVO_USUARIO'">
-                    {{message.date | date: 'shortTime'}} {{message.text}} {{message.username}}
+                    {{message.username}} entrou na sala.
                 </span>
                 <span *ngIf = "message.type == 'MENSAGEM'">
-                    {{message.date | date: 'shortTime'}} - {{message.username}} disse: <br> {{message.text}}
+                    {{message.date | date: 'shortTime'}} - {{message.username}}: {{message.text}}
+                </span>
+                <span *ngIf = "message.type == 'ANEXO'">
+                    {{message.username}} enviou um arquivo:<a [href] = "message.text" target="_blank"> {{message.info}}</a>
                 </span>
             </li>
         </ul>
     </div>
 
-    <div class="card-footer" *ngIf="conectado">
+    <div class="card-footer" *ngIf = "conectado">
         <form class="form-inline">
             <div class="form-group mx-3">
                 <input type="text" class="form-control" [(ngModel)] = "message.text" placeholder="Digite uma mensagem"
                     name="texto">
             </div>
-            <button class="btn btn-primary" type="submit" (click) = "sendMessage()">Enviar</button>
+            <button class="btn btn-primary" type="submit" (click) = "sendMessage()" [disabled]="!message.text">Enviar</button>
+             <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" (change)="onChange($event)" multiple>
+                <label class="custom-file-label" for="customFile" id="customFileLabel">Selecione o arquivo</label>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" (click)="onUpload()" [disabled]="!files">Upload</button>
+            </div>
+             
         </form>
     </div>
 </div>
