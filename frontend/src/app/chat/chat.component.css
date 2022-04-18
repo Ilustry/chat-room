@@ -23,3 +23,139 @@
 .title{
     font-size: x-large;
 }
+
+.logo img{
+    width: 20%;
+}
+
+.modelo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #029fd4;
+}
+
+.box{
+    padding: 3%;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 20px;
+    background-color: aliceblue;
+}
+
+.mr-2{
+    width: 100%;
+}
+
+.mr-2 button{
+    margin-top: 3%;
+    width: 100%;
+}
+
+.nav-item input, button{
+    border-radius: 0px;
+}
+
+.logout img{
+    position: relative;
+    width: 5%;
+    float: right;
+    bottom: 4vw;
+    left: 1.4vw;
+    cursor: pointer;
+}
+
+.modoEnvio img{
+    width: 2.5vw;
+    float: left;
+}
+
+.envioMensagem{
+    display: flex;
+}
+
+.form-inline{
+    justify-content: center;
+}
+
+.form-inline .form-group{
+    margin-right: 0 !important;
+}
+
+input, .custom-file-label{
+    border-radius: 0;
+}
+
+.form-inline label{
+    justify-content: center !important;
+}
+
+.envioAnexo{
+    display: contents;
+}
+
+@media (max-width: 1300px) {
+    .modoEnvio img{
+        width: 3.5vw;
+    }
+}
+
+@media (max-width: 1000px) {
+    .modoEnvio img{
+        width: 4.5vw;
+    }
+}
+
+@media (max-width: 900px) {
+    .envioAnexo button{
+        width: 100%;
+    }
+    .envioAnexo{
+        display: block;
+    }
+    .modoEnvio img {
+        width: 6.5vw;
+        margin-right: 0.5vw;
+    }
+}
+
+@media (max-width: 792px) {
+    .envioAnexo{
+        width: 70%;
+    }
+    .box{
+        margin-right: 11%;
+        margin-left: 11%;
+    }
+    .anexo img{
+        width: 5.5vw;
+    }
+    .msg img{
+        width: 8.5vw;
+    }
+}
+.custom-file-label::after{
+        display: none;
+    }
+@media (min-height: 915px) and (max-width: 450px){
+    .card-body{
+        /* height: 80% !important; */
+    }
+    .modoEnvio img{
+        width: 16.5vw;
+    }
+    .modelo{
+        height: 72vh;
+    }
+    .custom-file-label::after{
+        display: none;
+    }
+}
+
+@media (max-width: 415px){
+    .modelo{
+        height: 74vh;
+    }
+}

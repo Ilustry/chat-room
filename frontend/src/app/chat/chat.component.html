@@ -1,8 +1,89 @@
-<mat-toolbar color="primary">
-    <span class="title">Chat-Room</span>
-</mat-toolbar>
+<div class="modelo">
+    <div class="box">
+        <div class="logo">
+            <img src="../../assets/img/logo.png" alt="">
+        </div>
 
-<div class="card mx-4 my-4">
+        <div *ngIf = "conectado" class="logout">
+            <img src="../../assets/img/logout.png" (click) = "desconectar()">
+        </div>
+
+        <p *ngIf = "!conectado">
+            Bem-vindo!
+        </p>
+        <div class="card mx-4 my-4" *ngIf = "!conectado">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item mr-2" *ngIf = "!conectado">
+                        <input type="text" class="form-control" [(ngModel)] = "message.username" placeholder="Digite seu nome"
+                            name="username">
+                    </li>
+                    <li class="nav-item mr-2">
+                        <button class="btn btn-success" type="button" (click) = "conectar()" *ngIf = "!conectado" [disabled]="!message.username">Conectar</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-warning" type="button" (click) = "desconectar()"
+                            *ngIf = "conectado">Desconectar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div #scrollMe class="card-body" style="overflow-y: scroll; height: 360px; width: 100%; overflow-wrap: anywhere; text-align: left;" *ngIf = "conectado">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-light" *ngFor = "let message of messages">
+                    <span *ngIf = "message.type == 'NOVO_USUARIO'">
+                        {{message.username}} entrou na sala.
+                    </span>
+                    <span *ngIf = "message.type == 'MENSAGEM'">
+                        {{message.date | date: 'shortTime'}} - {{message.username}}: {{message.text}}
+                    </span>
+                    <span *ngIf = "message.type == 'ANEXO'">
+                        {{message.username}} enviou um arquivo:<a [href] = "message.text" target="_blank"> {{message.info}}</a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="card-footer" *ngIf = "conectado">
+            <form class="form-inline">
+                <div class="modoEnvio">
+                    <div class="msg">
+                        <img src="../../assets/img/msg.png" alt="" (click) = "trocarEnvio()" *ngIf = "modoEnvio">
+                    </div>
+                    <div class="anexo">
+                        <img src="../../assets/img/181505.png" alt="" (click) = "trocarEnvio()" *ngIf = "!modoEnvio">
+                    </div>
+                </div>
+                <div class="envioMensagem" *ngIf = "!modoEnvio">
+                    <div class="form-group mx-3" *ngIf = "!modoEnvio">
+                        <input type="text" class="form-control" [(ngModel)] = "message.text" placeholder="Digite uma mensagem"
+                            name="texto">
+                    </div>
+                    <button class="btn btn-primary" type="submit" *ngIf = "!modoEnvio" (click) = "sendMessage()" [disabled]="!message.text">Enviar</button>
+                </div>
+
+                <div class="envioAnexo">
+                    <div class="custom-file" *ngIf = "modoEnvio">
+                        <input type="file" class="custom-file-input" id="customFile" (change)="onChange($event)" multiple>
+                        <label class="custom-file-label" for="customFile" id="customFileLabel">Selecione o arquivo</label>
+                    </div>
+                    <div *ngIf = "modoEnvio">
+                        <button type="button" class="btn btn-primary" (click)="onUpload()" [disabled]="!temArquivo">Enviar</button>
+                    </div>
+                </div>
+                 
+            </form>
+        </div>
+
+        
+
+    </div>
+    
+</div>
+
+<!-- <div class="card mx-4 my-4">
     <div class="card-header">
         <ul class="nav nav-pills card-header-pills">
             <li class="nav-item mr-2" *ngIf = "!conectado">
@@ -52,4 +133,4 @@
              
         </form>
     </div>
-</div>
+</div> -->
