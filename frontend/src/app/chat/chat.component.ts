@@ -39,11 +39,7 @@ export class ChatComponent implements OnInit {
       });
 
       this.message.type = "NOVO_USUARIO";
-
-      this.client.publish({
-        destination: '/chat/mensagens',
-        body: JSON.stringify(this.message)
-      })
+      this.publishMessage()
 
     }
 
@@ -71,12 +67,16 @@ export class ChatComponent implements OnInit {
     this.client.deactivate();
   }
 
-  sendMessage(): void {
-    this.message.type = "MENSAGEM";
+  publishMessage(): void{
     this.client.publish({
       destination: '/chat/mensagens',
       body: JSON.stringify(this.message)
     })
+  }
+
+  sendMessage(): void {
+    this.message.type = "MENSAGEM";
+    this.publishMessage()
 
     this.message.text = '';
   }
@@ -108,10 +108,7 @@ export class ChatComponent implements OnInit {
           this.message.info = response.body[i].nome;
           this.message.text = "http://localhost:8080/anexos/" + response.body[i].id;
           this.message.type = "ANEXO";
-          this.client.publish({
-            destination: '/chat/mensagens',
-            body: JSON.stringify(this.message)
-          })
+          this.publishMessage()
 
           this.message.text = '';
           (document.getElementById('customFileLabel') as HTMLElement).innerHTML = 'Selecione o arquivo';
